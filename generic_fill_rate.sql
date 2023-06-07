@@ -1,5 +1,6 @@
 Declare @sql varchar(max) = ''
-declare @table_name as varchar(255) = '##temp_a' /*full table name*/
+declare @table_name as varchar(255) = '##temp_a'
+declare @column as varchar(255)
 declare @col_count as int 
 declare @columns table (column_name varchar(255), column_index int)
 declare @i as int
@@ -20,10 +21,10 @@ insert into @columns
 while  @i < @col_count
 begin
 	select @i =  @i + 1
---	select column_name from @columns where column_index = @i;
-	select @sql  = 'select 1.00 * count(' +(select  column_name from @columns where column_index = @i  ) + + ') / count(1) from '  +@table_name
+	select @column = column_name from @columns where column_index = @i
+	select @sql  = @sql +  iif(@i > 1, ' union all ' , '') +   ' select  ''' + @column +  ''' , 1.00 * count(' +@column+ + ') / count(1) from '  +@table_name
 end
 
-exec(@sql)
 
-/*EXEC (@sql)*/
+
+EXEC (@sql)
