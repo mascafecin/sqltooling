@@ -1,5 +1,5 @@
 Declare @sql varchar(max) = ''
-declare @table_name as varchar(255) = '##temp_a'
+declare @table_name as varchar(255) = '##temp_a' /*full table name*/
 declare @col_count as int 
 declare @columns table (column_name varchar(255), column_index int)
 declare @i as int
